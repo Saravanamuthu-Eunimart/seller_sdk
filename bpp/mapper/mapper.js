@@ -446,6 +446,11 @@ class PayloadConstructorVersion2{
         
         return data
     }
+
+    async selectMapper(data){
+        
+        return data
+    }
 }
 
 export {PayloadConstructor, PayloadConstructorVersion2}
