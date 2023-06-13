@@ -4,7 +4,7 @@ import {getCounter, setCounter} from '../subscription/subscription.js'
 // import temp from "../mapper/on_select.js";
 import {PayloadConstructor, PayloadConstructorVersion2} from '../mapper/mapper.js'
 const payloadConstructor=new PayloadConstructor()
-const payloadConstructorV2=new PayloadConstructorVersion2()
+// const payloadConstructorV2=new PayloadConstructorVersion2()
 const mappers=new Mappers()
 import {Authentication} from "../auth/auth.js";   
 class Order{
@@ -18,15 +18,13 @@ async Search(payload,mapping,callback){
         await axios.get(payload.http_entity_endpoint)
       .then(async function (response) {
         const data=mappers.searchMapper(mapping,response.data)
-        // var temporary={
-        //   "bpp_fulfillments": data.bpp_fulfillments,
-        //   "bpp_descriptor": data.bpp_descriptor,
-        //   "bpp_providers": data.bpp_providers
-        // }
-        // console.log(getCounter())
 
-        callback(await payloadConstructor.searchMapper(data),null)
-        // callback(data,null)
+        if (data?.context?.core_version == "1.1.1"){
+          callback(await payloadConstructor.searchMapper(data),null)
+        }
+        // else if(data?.context?.core_version == "1.1.2"){
+        //   callback(await payloadConstructorV2.searchMapper(data),null)
+        // }
       })
       .catch(function (error) {
         callback(null,error)
@@ -49,7 +47,9 @@ async Select(payload,mapping,callback){
         //   "items": data.items
 
         // }
-        callback(await payloadConstructor.selectMapper(data),null)
+        if (data?.context?.core_version == "1.1.1"){ 
+          callback(await payloadConstructor.selectMapper(data),null)
+        }
         // callback(data,null)
       })
       .catch(function (error) {
@@ -65,7 +65,9 @@ async Init(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.initMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.initMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -87,7 +89,9 @@ async Confirm(payload,mapping,callback){
   //   "bpp_providers": data.bpp_providers
   // }
   // console.log("-----",JSON.stringify(data))
-  callback(await payloadConstructor.confirmMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.confirmMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -103,7 +107,9 @@ async Status(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.statusMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.statusMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -120,7 +126,9 @@ async Update(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.updateMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.updateMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -137,7 +145,9 @@ async Cancel(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.cancelMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.cancelMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -154,7 +164,9 @@ async Support(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.supportMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.supportMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
@@ -171,7 +183,9 @@ async Track(payload,mapping,callback){
   await axios.get(payload.http_entity_endpoint)
 .then(async function (response) {
   const data=mappers.commonMapper(mapping,response.data)
-  callback(await payloadConstructor.trackMapper(data),null)
+  if (data?.context?.core_version == "1.1.1"){ 
+    callback(await payloadConstructor.trackMapper(data),null)
+  }
   // callback(data,null)
 })
 .catch(function (error) {
